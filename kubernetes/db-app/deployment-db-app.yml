@@ -1,0 +1,23 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Unique key of the Deployment instance
+  name: my-db-node-app
+spec:
+  # 3 Pods should exist at all times.
+  replicas: 5
+  selector:
+    matchLabels:
+      app: db-node-app
+  template:
+    metadata:
+      labels:
+        # Apply this label to pods and default
+        # the Deployment label selector to this value
+        app: db-node-app
+    spec:
+      containers:
+      - name: db-node-app
+        # Run this image
+        image: mstsurnalyakte/node-mongo-db:01
