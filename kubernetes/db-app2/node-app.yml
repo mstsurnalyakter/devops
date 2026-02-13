@@ -7,7 +7,7 @@ metadata:
   name: node-app
 spec:
   # 5 Pods should exist at all times.
-  replicas: 1
+  replicas: 5
   selector:
     matchLabels:
       app: node-app
