@@ -20,8 +20,23 @@ spec:
     spec:
       containers:
       - name: node-app
-        # Run this image
         image: mstsurnalyakte/node-mongo-db:06
+        env:
+        - name: MONGO_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: mongo-config
+              key: MONGO_HOST
+        - name: MONGO_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: mongo-config
+              key: MONGO_PORT
+        - name: MONGO_DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: mongo-config
+              key: MONGO_DB_NAME
    
 
 
