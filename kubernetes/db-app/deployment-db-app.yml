@@ -20,4 +20,7 @@ spec:
       containers:
       - name: db-node-app
         # Run this image
-        image: mstsurnalyakte/node-mongo-db:01
+        image: mstsurnalyakte/node-mongo-db:05
+      - name: mongodb
+        # Run this image
+        image: mongo:latest
