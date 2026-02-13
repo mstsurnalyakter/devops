@@ -1,0 +1,51 @@
+# same pods with different containers
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Unique key of the Deployment instance
+  name: my-db-node-app
+spec:
+  # 5 Pods should exist at all times.
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-node-app
+  template:
+    metadata:
+      labels:
+        # Apply this label to pods and default
+        # the Deployment label selector to this value
+        app: db-node-app
+    spec:
+      containers:
+      - name: db-node-app
+        # Run this image
+        image: mstsurnalyakte/node-mongo-db:06
+      - name: mongodb
+        # Run this image
+        image: mongo:latest
+
+
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  # Unique key of the Service instance
+  name: service-db-node-app
+spec:
+  ports:
+    # Accept traffic sent to port 80
+    - name: http
+      port: 8080
+      targetPort: 3000 # Forward to port 3000 on the Pods
+  selector:
+    # Loadbalance traffic across Pods matching
+    # this label selector
+    app: db-node-app # Match the label applied to the Pods by the Deployment[template.metadata.labels.app]
+  # Create an HA proxy in the cloud provider
+  # with an External IP address - *Only supported
+  # by some cloud providers*
+  type: LoadBalancer
